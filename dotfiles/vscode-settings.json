@@ -1,0 +1,47 @@
+// Place your settings in this file to overwrite the default settings
+{
+    // Word seperators for block iteration / search
+    "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": true,
+
+    // Controls the font size in pixels.
+    "editor.fontSize": 11,
+
+    // The number of spaces a tab is equal to. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+    "editor.tabSize": 2,
+
+    // Columns at which to show vertical rulers
+    "editor.rulers": [80, 120],
+
+    // Controls if the explorer should automatically reveal files when opening them.
+    "explorer.autoReveal": false,
+
+    // Controls auto save of dirty files. Accepted values:  "off", "afterDelay", "onFocusChange" (editor loses focus), "onWindowChange" (window loses focus). If set to "afterDelay", you can configure the delay in "files.autoSaveDelay".
+    "files.autoSave": "onFocusChange",
+
+    // Controls the delay in ms after which a dirty file is saved automatically. Only applies when "files.autoSave" is set to "afterDelay"
+    "files.autoSaveDelay": 1000,
+
+    // When enabled, will trim trailing whitespace when you save a file.
+    "files.trimTrailingWhitespace": true,
+
+    // Controls where editors open. Select 'left' or 'right' to open editors to the left or right of the current active one. Select 'first' or 'last' to open editors independently from the currently active one.
+    "workbench.editor.openPositioning": "left",
+
+    // Controls if opened editors from Quick Open show as preview. Preview editors are reused until they are kept (e.g. via double click or editing).
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+
+    //Controls if suggestions should be accepted 'Enter' - in addition to 'Tab'. Helps to avoid ambiguity between inserting new lines or accepting suggestions.
+    "editor.acceptSuggestionOnEnter": false,
+
+    "editor.roundedSelection": true,
+
+    "git.enabled": false,
+
+    "python.pythonPath": "/Users/michaelhighstead/.virtualenvs/starscream/bin/python"
+
+
+    // "git.allowLargeRepositories": false
+}
