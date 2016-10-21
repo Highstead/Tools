@@ -1,6 +1,8 @@
 
 ####################################
 # Scala and  pyspark setup
+
+bind 'set completion-ignore-case on'
 export JAVA_HOME=$(/usr/libexec/java_home)
 export SCALA_HOME=/usr/local/bin/scala
 export SPARK_HOME=$HOME/tools/spark
