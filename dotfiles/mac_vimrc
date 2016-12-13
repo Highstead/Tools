@@ -4,13 +4,22 @@
 " F2 - Enables paste mode
 
 
+noremap ; h
+noremap q l
+noremap j k
+noremap k j
+
+if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+endif
+
 " set a map leader for more key combos
 let mapleader="'"       " leader is apostraphe
 
-" Auto line numbers
 set number
+set nowrap
 
-" Improved indentation on newline
+" Improved indentation on newline - Use f2 to disable this for paste purposes
 set autoindent
 set smartindent
 
@@ -40,6 +49,8 @@ set hlsearch                " highlight search results
 set incsearch               " set incremental search, like modern browsers
 set nolazyredraw            " don't redraw while executing macros
 
+nnoremap <F5> :buffers<CR>:buffer<Space>
+autocmd BufWritePost *.cpp :TlistUpdate
 
 " shortcut to save
 nmap <leader>\ :w<cr>
@@ -62,70 +73,22 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " airline
 set laststatus=2
 set ttimeoutlen=50
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = ' '
-
-" you complete me - Requires compiling and a bunch of work. 
-let g:ycm_allow_changing_updatetime = 1         " leave my updatetime alone
-let g:ycm_collect_identifiers_from_tags_files = 1
-" set completeopt="menu"                          " remove preview from completeopt
-
-" ------------------------ Go def stuff ------------------------ "
-"
-au FileType go nmap <leader>t <Plug>(go-test)
-
-au FileType go nmap gd <Plug>(go-def-split)
-au FileType go nmap gv <Plug>(go-def-vertical)
-au FileType go nmap <F11> <Plug>(go-def-tab)
-
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-
-
-"
-" ------------------------ Python stuff ------------------------ "
-"
-
-let python_highlight_all=1
-
-au FileType py set tabstop=4 set softtabstop=4 set shiftwidth=4 set expandtab set autoindent set fileformat=unix
-
-"
-" ------------------------ Html stuff ------------------------ "
-"
-
-"tmuxline
-let g:tmuxline_powerline_separators = 0
-
-" set git gutter to update faster
-set updatetime=100
-let g:gitgutter_sign_column_always = 1
-
-" set ruby to not do expensive syntax highlighting 
-let ruby_no_expensive=1
-
-" Set easytags to use project-dependent tags
-set tags=./.tags;,~/.vimtags
-
-"Set easytags to compile go-tags
-let g:easytags_languages = {   'language': {     'go': 'gotags',       'fileoutput_opt': '-f',       'stdout_opt': '-f-',       'recurse_flag': '-R'   }}
-
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-
-" Use silver_searcher if it is installed 
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
-
-
 
 "
 " ------------------------------ Plugin section  ---------------------------
 "
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+
+" Set Vundle to use ssh
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -160,8 +123,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'austintaylor/vim-commaobject'
 
 " airline
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
 
 " nerdtree
 Plugin 'scrooloose/nerdtree'
@@ -183,9 +146,6 @@ Plugin 'vim-scripts/indentpython.vim'
 
 " Powerline - encoding, vertualenv, git branch etc
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-
-" quick-scope - Quick inline searching with 'f' key
-Plugin 'unblevable/quick-scope' 
 
 " Code completion
 " On servers, probably want to use ervandew/supertab since it's 
@@ -227,18 +187,6 @@ set grepprg=Ack
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"
-
-" Set Vundle to use ssh
 let g:vundle_default_git_proto = 'git'
 
 " -------------------- You complete me shenanigans ------------------"
@@ -280,6 +228,17 @@ au FileType go nmap <F11> <Plug>(go-def-tab)
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 
+" ------------------------ Airline settings ------------------------ "
+" 
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = ' '
+
+" you complete me - Requires compiling and a bunch of work. 
+let g:ycm_allow_changing_updatetime = 1         " leave my updatetime alone
+let g:ycm_collect_identifiers_from_tags_files = 1
+" set completeopt="menu"                          " remove preview from completeopt
+
 
 "
 " ------------------------ Python stuff ------------------------ "
@@ -308,7 +267,12 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'some_bad_symbolic_links',
   \ }
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-"
+
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+      let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  endif
+
 " ------------------------ Html stuff ------------------------ "
 "
 
