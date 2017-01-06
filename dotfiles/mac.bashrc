@@ -35,6 +35,8 @@ alias ls='ls -G'
 alias ll='ls -alG'
 # export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
+gocd () { cd `go list -f '{{.Dir}}' $1` }
+
 # load dev, but only if present and the shell is interactive
 if [[ -f /opt/dev/dev.sh ]] && [[ $- == *i* ]]; then
   source /opt/dev/dev.sh
