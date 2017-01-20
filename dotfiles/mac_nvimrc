@@ -1,0 +1,313 @@
+" ------------------------------------------------------------------------------
+"  Vim - Tips and tricks
+" ------------------------------------------------------------------------------
+" F2 - Enables paste mode
+if has('nvim')
+    let s:editor_root=expand("~/.config/nvim")
+
+    tnoremap <Esc> <C-\><C-n>
+else
+    let s:editor_root=expand("~/.vim")
+endif
+
+noremap ; h
+noremap q l
+noremap j k
+noremap k j
+
+" Nvim navigation between windows, exiting terminal
+" ;qjk -> …œ∆˚
+tnoremap … <C-\><C-n><C-w>h     
+tnoremap ∆ <C-\><C-n><C-w>j
+tnoremap ˚ <C-\><C-n><C-w>k
+tnoremap œ <C-\><C-n><C-w>l
+nnoremap … <C-w>h
+nnoremap ∆ <C-w>j
+nnoremap ˚ <C-w>k
+nnoremap œ <C-w>l
+
+" set a map leader for more key combos
+let mapleader="'"       " leader is apostraphe
+
+set number
+set nowrap
+
+" Improved indentation on newline - Use f2 to disable this for paste purposes
+set autoindent
+set smartindent
+
+" Tab control
+set expandtab               " insert tabs rather than spaces for <Tab>
+set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+set tabstop=4               " the visible width of tabs
+set softtabstop=4           " edit as if the tabs are 4 characters wide
+set shiftwidth=4            " number of spaces to use for indent and unindent
+set shiftround              " round indent to a multiple of 'shiftwidth'
+" set completeopt+=longest
+set pastetoggle=<F2>
+
+" code folding settings
+set foldmethod=indent       " fold based on indent
+set foldnestmax=10          " deepest fold is 10 levels
+set nofoldenable            " don't fold by default
+set foldlevel=2
+
+" set default yank/copy/delete buffer to be system clipboard
+set clipboard=unnamed
+
+" Searching
+set ignorecase              " case insensitive searching
+set smartcase               " case-sensitive if expresson contains a capital letter
+set hlsearch                " highlight search results
+set incsearch               " set incremental search, like modern browsers
+set nolazyredraw            " don't redraw while executing macros
+
+if !has('nvim')
+    nnoremap <F5> :buffers<CR>:buffer<Space>
+else
+    nnoremap <F5> :buffer<Space>
+endif
+autocmd BufWritePost *.cpp :TlistUpdate
+
+" shortcut to save
+nmap <leader>\ :w<cr>
+nmap U :redo<cr>
+" Set colours
+syntax on                   " switch syntax highlighting on
+
+set t_Co=256                " Explicitly tell vim that the terminal supports 256 colors"
+set background=dark
+
+" set line the cursor is on to be highlighted
+set cursorline
+
+" make comments and HTML attributes italic
+highlight htmlArg cterm=italic
+filetype off                  " required
+
+" airline
+set laststatus=2
+set ttimeoutlen=50
+
+
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=/Users/michaelhighstead/.nvim/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('/Users/michaelhighstead/.nvim')
+  call dein#begin('/Users/michaelhighstead/.nvim')
+
+  " Let dein manage dein
+  " call map(dein#check_clean(), "delete(v:val, 'rf')") Uninstall things
+  " Required:
+  call dein#add('/Users/michaelhighstead/.nvim/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/deoplete.nvim')
+
+  " Nerdtree
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('Xuyuanp/nerdtree-git-plugin')
+
+  " Git blame, etc
+  call dein#add('tpope/vim-fugitive')
+
+
+  " You can specify revision/branch/tag.
+  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+
+  " Fuzzy search, consider replacing with fzf
+  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('mileszs/ack.vim')
+
+  call dein#add('nsf/gocode', {'rtp': 'nvim/'})
+  call dein#add('zchee/deoplete-go', {'build': 'make'})
+  call dein#add('fatih/vim-go')
+
+  " GUI
+  call dein#add('vim-airline/vim-airline')
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+if dein#check_install()
+  call dein#install()
+endif
+" neocomplete like
+set completeopt+=noinsert
+" deoplete.nvim recommend
+set completeopt+=noselect
+
+"End dein Scripts-------------------------
+"  
+"  
+"  " -------- Python plugins -------- "
+"  Plugin 'scrooloose/syntastic'
+"  Plugin 'nvie/vim-flake8'
+"  
+"  " -------- Go plugins -------- "
+ " Solarized
+ " cd ~/.vim/bundle
+ " git clone git://github.com/altercation/vim-colors-solarized.git
+ " mv vim-colors-solarized ~/.vim/bundle
+syntax enable
+set background=dark
+colorscheme Solarized
+set mouse=a
+
+set backspace=indent,eol,start
+set tabstop=4
+set softtabstop=4
+set expandtab           " tabs are spaces
+set number              " show line numbers
+set showcmd             " show command in bottom bar
+set cursorline          " highlight current line
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+set grepprg=Ack
+
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+
+" ------------------------ Nerd Tree Settings ------------------------ "
+"
+
+" NERDtree - git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+" :help NERD_tree.txt
+let g:NERDTreeWinSize=35
+let g:NERDTreeWinPos = "left"
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+" 'Hide nerdtree if not dir
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+map <C-n> :NERDTreeToggle<CR>
+
+" airline
+
+" you complete me - Requires compiling and a bunch of work. 
+let g:ycm_allow_changing_updatetime = 1         " leave my updatetime alone
+let g:ycm_collect_identifiers_from_tags_files = 1
+set completeopt="menu"                          " remove preview from completeopt
+
+" ------------------------ Go def stuff ------------------------ "
+" Deoplete go settings
+" Path to python interpreter for neovim
+let g:python3_host_prog  = '/usr/local/bin/python3'
+" " Skip the check of neovim module
+let g:python3_host_skip_check = 1
+" 
+" " Run deoplete.nvim automatically
+let g:deoplete#enable_at_startup = 1
+" " deoplete-go settings
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#use_cache = 1
+let g:deoplete#sources#go#json_directory = '~/.nvim/cache/gocode'
+
+" vim-go settings
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+au FileType go nmap <leader>t <Plug>(go-test)
+"
+au FileType go nmap gd <Plug>(go-def-split)
+au FileType go nmap gv <Plug>(go-def-vertical)
+au FileType go nmap <F11> <Plug>(go-def-tab)
+" 
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+
+let g:go_fmt_command = "goimports"
+
+" ------------------------ Airline settings ------------------------ "
+" 
+set laststatus=2
+set noshowmode
+set ttimeoutlen=50
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = ' '
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+"
+" ------------------------ Python stuff ------------------------ "
+"
+
+let python_highlight_all=1
+
+au FileType py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+"
+" ------------------------ CtrlP stuff ------------------------ "
+" :help ctrlp.txt
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+      let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  endif
+
+" ------------------------ Html stuff ------------------------ "
+"
+
+"tmuxline
+let g:tmuxline_powerline_separators = 0
+
+" set git gutter to update faster
+set updatetime=100
+let g:gitgutter_sign_column_always = 1
+
+" set ruby to not do expensive syntax highlighting 
+let ruby_no_expensive=1
+
+" Set easytags to use project-dependent tags
+set tags=./.tags;,~/.vimtags
+
+"Set easytags to compile go-tags
+let g:easytags_languages = {
+    \   'language': {
+    \     'go': 'gotags',
+    \       'fileoutput_opt': '-f',
+    \       'stdout_opt': '-f-',
+    \       'recurse_flag': '-R'
+    \   }
+    \}
+
+" Use silver_searcher if it is installed 
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
