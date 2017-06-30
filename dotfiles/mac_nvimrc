@@ -1,7 +1,3 @@
-" ------------------------------------------------------------------------------
-"  Vim - Tips and tricks
-" ------------------------------------------------------------------------------
-" F2 - Enables paste mode
 if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
 
@@ -9,7 +5,7 @@ if has('nvim')
 else
     let s:editor_root=expand("~/.vim")
 endif
-
+set autoread " Reloads when buffer is stale
 noremap ; h
 noremap q l
 noremap j k
@@ -25,6 +21,9 @@ nnoremap … <C-w>h
 nnoremap ∆ <C-w>j
 nnoremap ˚ <C-w>k
 nnoremap œ <C-w>l
+
+" Previous Buffer
+noremap <F7> <C-^> 
 
 " set a map leader for more key combos
 let mapleader="'"       " leader is apostraphe
@@ -67,6 +66,7 @@ if !has('nvim')
 else
     nnoremap <F5> :buffer<Space>
 endif
+
 autocmd BufWritePost *.cpp :TlistUpdate
 
 " shortcut to save
@@ -119,6 +119,17 @@ if dein#load_state('/Users/michaelhighstead/.nvim')
   " Git blame, etc
   call dein#add('tpope/vim-fugitive')
 
+  " Python linter
+  call dein#add('nvie/vim-flake8')
+
+  " Python
+  call dein#add('neovim/python-client')
+  call dein#add('davidhalter/jedi')
+  call dein#add('zchee/deoplete-jedi')
+
+  " Ruby
+  call dein#add('fishbullet/deoplete-ruby')
+
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -150,6 +161,8 @@ endif
 set completeopt+=noinsert
 " deoplete.nvim recommend
 set completeopt+=noselect
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
 
 "End dein Scripts-------------------------
 "  
@@ -261,6 +274,10 @@ au FileType py
     \ set expandtab
     \ set autoindent
     \ set fileformat=unix
+
+au FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent fileformat=unix
+
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 
 "
 " ------------------------ CtrlP stuff ------------------------ "
