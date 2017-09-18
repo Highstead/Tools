@@ -28,7 +28,14 @@ noremap <F7> <C-^>
 " set a map leader for more key combos
 let mapleader="'"       " leader is apostraphe
 
-set number
+set number relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,WinEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,WinLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 set nowrap
 
 " Improved indentation on newline - Use f2 to disable this for paste purposes
@@ -267,17 +274,9 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 
 let python_highlight_all=1
 
-au FileType py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+au FileType py,python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent fileformat=unix
 
-au FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent fileformat=unix
-
-autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType ruby,html,css setlocal expandtab shiftwidth=2 tabstop=2 fileformat=unix autoindent
 
 "
 " ------------------------ CtrlP stuff ------------------------ "
@@ -286,6 +285,7 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_switch_buffer = 't'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll)$',
