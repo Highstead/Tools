@@ -8,8 +8,6 @@ endif
 set autoread " Reloads when buffer is stale
 noremap ; h
 noremap q l
-noremap j k
-noremap k j
 
 " Nvim navigation between windows, exiting terminal
 " ;qjk -> …œ∆˚
@@ -43,12 +41,12 @@ set autoindent
 set smartindent
 
 " Tab control
-set expandtab               " insert tabs rather than spaces for <Tab>
-set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-set tabstop=4               " the visible width of tabs
-set softtabstop=4           " edit as if the tabs are 4 characters wide
-set shiftwidth=4            " number of spaces to use for indent and unindent
-set shiftround              " round indent to a multiple of 'shiftwidth'
+" set expandtab               " insert tabs rather than spaces for <Tab>
+" set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+" set tabstop=2               " the visible width of tabs
+" set softtabstop=2           " edit as if the tabs are 4 characters wide
+" set shiftwidth=2            " number of spaces to use for indent and unindent
+" set shiftround              " round indent to a multiple of 'shiftwidth'
 " set completeopt+=longest
 set pastetoggle=<F2>
 
@@ -72,6 +70,12 @@ if !has('nvim')
     nnoremap <F5> :buffers<CR>:buffer<Space>
 else
     nnoremap <F5> :buffer<Space>
+endif
+
+if !has('nvim')
+    nnoremap <F1> :buffers<CR>:buffer<Space>
+else
+    nnoremap <F1> :buffer<Space>
 endif
 
 autocmd BufWritePost *.cpp :TlistUpdate
@@ -189,9 +193,6 @@ colorscheme Solarized
 set mouse=a
 
 set backspace=indent,eol,start
-set tabstop=4
-set softtabstop=4
-set expandtab           " tabs are spaces
 set number              " show line numbers
 set showcmd             " show command in bottom bar
 set cursorline          " highlight current line
@@ -276,7 +277,7 @@ let python_highlight_all=1
 
 au FileType py,python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent fileformat=unix
 
-autocmd FileType ruby,html,css setlocal expandtab shiftwidth=2 tabstop=2 fileformat=unix autoindent
+autocmd FileType ruby,html,css,yaml,yml setlocal expandtab shiftwidth=2 tabstop=2 fileformat=unix autoindent
 
 "
 " ------------------------ CtrlP stuff ------------------------ "
