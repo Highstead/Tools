@@ -107,16 +107,15 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/Users/michaelhighstead/.nvim/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/michaelhighstead/.nvim')
-  call dein#begin('/Users/michaelhighstead/.nvim')
+if dein#load_state('/Users/michaelhighstead/.cache/dein')
+  call dein#begin('/Users/michaelhighstead/.cache/dein')
 
   " Let dein manage dein
-  " call map(dein#check_clean(), "delete(v:val, 'rf')") Uninstall things
   " Required:
-  call dein#add('/Users/michaelhighstead/.nvim/repos/github.com/Shougo/dein.vim')
+  call dein#add('/Users/michaelhighstead/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')

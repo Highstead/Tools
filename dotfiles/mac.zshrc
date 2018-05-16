@@ -57,8 +57,6 @@ POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="%K{black}%F{white} %T %f%k%F{white}
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status vcs virtualenv dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 
-export JAVA_HOME=$(/usr/libexec/java_home)
-export SCALA_HOME=/usr/local/bin/scala
 # export SPARK_HOME=$HOME/tools/spark
 export PYTHONPATH=/usr/local/bin/python
 
@@ -68,7 +66,9 @@ source $(brew --prefix)/bin/virtualenvwrapper.sh
 # source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 
 GIT_PS1_SHOWDIRTYSTATE=true
-export EDITOR=vim
+export VISUAL=nvim
+export EDITOR=$VISUAL
+export GIT_EDITOR=$VISUAL
 export GOPATH=~/projects/goprojects
 export GOROOT=/Users/michaelhighstead/.dev/go/1.7.1
 export PATH=$PATH:$GOPATH/bin
@@ -84,11 +84,16 @@ gocd () { cd `go list -f '{{.Dir}}' $1` }
 alias ls='ls -G'
 alias ll='ls -alG'
 alias cqlsh="cqlsh --cqlversion 3.4.0"
+alias vim='nvim'
 # export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 # load dev, but only if present and the shell is interactive
 if [[ -f /opt/dev/dev.sh ]] && [[ $- == *i* ]]; then
   source /opt/dev/dev.sh
+fi
+
+if [ $commands[kubectl] ]; then
+  source <(kubectl completion zsh)
 fi
 # export MANPATH="/usr/local/man:$MANPATH"
 
