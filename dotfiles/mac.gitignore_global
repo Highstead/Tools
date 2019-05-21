@@ -1,2 +1,9 @@
 .vscode/ 
 metastore_db/
+.bloop
+.metals
+.idea
+.DS_STORE
+*.log
+*.log.*
+

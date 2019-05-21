@@ -18,6 +18,8 @@ mkdir projects
 cd projects
 git clone git@github.com:Highstead/Tools.git
 git clone git://github.com/altercation/vim-colors-solarized.git
+go get golang.org/x/tools/cmd/goimports
+# TODO add compile and move goimports and gocode
 mkdir -p ~/.config/nvim/
 mv vim-colors-solarized/colors ~/.config/nvim/colors/
  " mv vim-colors-solarized ~/.vim/bundle

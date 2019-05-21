@@ -281,7 +281,7 @@ let g:tmuxline_powerline_separators = 0
 
 " set git gutter to update faster
 set updatetime=100
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 
 " set ruby to not do expensive syntax highlighting 
 let ruby_no_expensive=1

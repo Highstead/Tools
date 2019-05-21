@@ -1,4 +1,3 @@
-LANG="en_US.UTF-8"
 LC_COLLATE="en_US.UTF-8"
 LC_CTYPE="en_US.UTF-8"
 LC_MESSAGES="en_US.UTF-8"
@@ -67,12 +66,15 @@ source $(brew --prefix)/bin/virtualenvwrapper.sh
 
 GIT_PS1_SHOWDIRTYSTATE=true
 export VISUAL=nvim
-export EDITOR=$VISUAL
+# export EDITOR=$VISUAL
+export KUBE_EDITOR=$VISUAL
 export GIT_EDITOR=$VISUAL
 export GOPATH=~/projects/goprojects
-export GOROOT=/Users/michaelhighstead/.dev/go/1.7.1
+export GOROOT=/Users/michaelhighstead/.dev/go/1.11
+export GOBIN=$GOPATH/bin
+
 export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$SCALA_HOME/bin
+export PATH=$PATH:~/bin
 # export PATH=$PATH:$SPARK_HOME/bin
 export PATH=$PATH:$GOROOT
 export PATH=$PATH:/Users/michaelhighstead/cql/dsc-cassandra-3.0.7/bin
@@ -81,10 +83,31 @@ export PATH=$PATH:/Users/michaelhighstead/tools/maven/bin
 gocd () { cd `go list -f '{{.Dir}}' $1` }
 
 ### LS Colours
-alias ls='ls -G'
-alias ll='ls -alG'
 alias cqlsh="cqlsh --cqlversion 3.4.0"
+alias docker-clean='docker rm $(docker ps -a -q) && docker rmi $(docker images -q)'
+alias docker-stop='docker ps | grep "^[0-9a-f]" | cut -d " " -f1 | xargs docker stop'
+alias gb="git for-each-ref --sort=committerdate refs/heads/ --format='%(color: white)%(committerdate:short) %(color: blue)%(refname:short)'"
+alias gg='go get -u $1 && go install $1'
+alias git-branch="git for-each-ref --sort=committerdate refs/heads/ --format='%(color: white)%(committerdate:short) %(color: blue)%(refname:short)'"
+alias ll='ls -alG'
+alias ls='ls -G'
+alias maps='telnet mapscii.me'
+alias mysql='mysql --protocol=tcp'
 alias vim='nvim'
+alias weather='curl http://wttr.in/ottawa'
+alias history='history -i'
+
+alias t2use1='kubectl --context=tier2'
+alias t2usc1='kubectl --context=tier2-central'
+alias t1use2='kubectl --context=tier1-us-east-2'
+alias t1usc2='kubectl --context=tier1-us-central-2'
+alias t1use6='kubectl --context=tier1-us-east1-6'
+alias t1usc6='kubectl --context=tier1-us-central1-6'
+alias t1use1='kubectl --context=tier1'
+alias t1can2='kubectl --context=tier1-na-ne1-2'
+alias git-clean='git remote prune origin && git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
+
+alias nolint='rm -rf .git/hooks/pre-push.d'
 # export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 # load dev, but only if present and the shell is interactive
@@ -95,29 +118,29 @@ fi
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
-# export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+_complete_ssh_hosts ()
+{
+        COMPREPLY=()
+        cur="${COMP_WORDS[COMP_CWORD]}"
+        comp_ssh_hosts=`cat ~/.ssh/known_hosts | \
+                        cut -f 1 -d ' ' | \
+                        sed -e s/,.*//g | \
+                        grep -v ^# | \
+                        uniq | \
+                        grep -v "\[" ;
+                cat ~/.ssh/config | \
+                        grep "^Host " | \
+                        awk '{print $2}'
+                `
+        COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
+        return 0
+}
+complete -F _complete_ssh_hosts ssh
+killall gpg-agent
+export GO111MODULE=on
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# cloudplatform: add Shopify clusters to your local kubernetes config
+export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/michaelhighstead/.kube/config:/Users/michaelhighstead/.kube/config.shopify.cloudplatform
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
