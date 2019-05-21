@@ -11,27 +11,41 @@ noremap q l
 
 " Nvim navigation between windows, exiting terminal
 " ;qjk -> …œ∆˚
-tnoremap … <C-\><C-n><C-w>h     
-tnoremap ∆ <C-\><C-n><C-w>j
-tnoremap ˚ <C-\><C-n><C-w>k
-tnoremap œ <C-\><C-n><C-w>l
-nnoremap … <C-w>h
-nnoremap ∆ <C-w>j
-nnoremap ˚ <C-w>k
-nnoremap œ <C-w>l
+tnoremap <M-;> <C-\><C-n><C-w>h     
+tnoremap <M-j> <C-\><C-n><C-w>j
+tnoremap <M-k> <C-\><C-n><C-w>k
+tnoremap <M-q> <C-\><C-n><C-w>l
+nnoremap <M-;> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-q> <C-w>l
+" tnoremap … <C-\><C-n><C-w>h     
+" tnoremap ∆ <C-\><C-n><C-w>j
+" tnoremap ˚ <C-\><C-n><C-w>k
+" tnoremap œ <C-\><C-n><C-w>l
+" nnoremap … <C-w>h
+" nnoremap ∆ <C-w>j
+" nnoremap ˚ <C-w>k
+" nnoremap œ <C-w>l
 
 " Previous Buffer
 noremap <F7> <C-^> 
 
 " set a map leader for more key combos
-let mapleader="'"       " leader is apostraphe
+let mapleader=","       " leader is apostraphe
 
 set number relativenumber
 
 augroup numbertoggle
   autocmd!
   autocmd BufEnter,WinEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,WinLeave,FocusLost,InsertEnter   * set norelativenumber
+  autocmd BufLeave,WinLeave,FocusLost,InsertEnter * set norelativenumber
+augroup END
+
+" Hide line numbers on terminal open
+augroup TerminalStuff
+  autocmd!
+  autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
 
 set nowrap
@@ -43,12 +57,13 @@ set smartindent
 " Tab control
 " set expandtab               " insert tabs rather than spaces for <Tab>
 " set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-" set tabstop=2               " the visible width of tabs
+set tabstop=4                 " the visible width of tabs
 " set softtabstop=2           " edit as if the tabs are 4 characters wide
-" set shiftwidth=2            " number of spaces to use for indent and unindent
+set shiftwidth=4              " number of spaces to use for indent and unindent
 " set shiftround              " round indent to a multiple of 'shiftwidth'
 " set completeopt+=longest
 set pastetoggle=<F2>
+set nofixendofline
 
 " code folding settings
 set foldmethod=indent       " fold based on indent
@@ -72,16 +87,9 @@ else
     nnoremap <F5> :buffer<Space>
 endif
 
-if !has('nvim')
-    nnoremap <F1> :buffers<CR>:buffer<Space>
-else
-    nnoremap <F1> :buffer<Space>
-endif
-
 autocmd BufWritePost *.cpp :TlistUpdate
 
 " shortcut to save
-nmap <leader>\ :w<cr>
 nmap U :redo<cr>
 " Set colours
 syntax on                   " switch syntax highlighting on
@@ -133,12 +141,18 @@ if dein#load_state('/Users/michaelhighstead/.cache/dein')
   call dein#add('nvie/vim-flake8')
 
   " Python
-  call dein#add('neovim/python-client')
-  call dein#add('davidhalter/jedi')
-  call dein#add('zchee/deoplete-jedi')
+  " call dein#add('neovim/python-client', {'on_ft': 'python'})
+  " call dein#add('davidhalter/jedi', {'on_ft': 'python'})
+  " call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
 
   " Ruby
-  call dein#add('fishbullet/deoplete-ruby')
+  " call dein#add('fishbullet/deoplete-ruby')
+  
+  " Scala
+  call dein#add('derekwyatt/vim-scala')
+
+  " Conquer of completion
+  call dein#add('neoclide/coc.nvim', {'build': './install.sh'})
 
 
   " You can specify revision/branch/tag.
@@ -148,9 +162,10 @@ if dein#load_state('/Users/michaelhighstead/.cache/dein')
   call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('mileszs/ack.vim')
 
-  call dein#add('nsf/gocode', {'rtp': 'nvim/'})
-  call dein#add('zchee/deoplete-go', {'build': 'make'})
-  call dein#add('fatih/vim-go')
+  " Golang
+  " call dein#add('zchee/deoplete-go', {'on_ft': 'go', 'build': 'make'})
+  " call dein#add('fatih/vim-go', {'on_ft': 'go'})
+  " call dein#add('sebdah/vim-delve', {'on_ft': 'go'})
 
   " GUI
   call dein#add('vim-airline/vim-airline')
@@ -175,6 +190,8 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 
 "End dein Scripts-------------------------
+" Hide linenumbers in terminal -------------------------------------------------
+
 "  
 "  
 "  " -------- Python plugins -------- "
@@ -234,29 +251,50 @@ let g:python3_host_skip_check = 1
 " " Run deoplete.nvim automatically
 let g:deoplete#enable_at_startup = 1
 " " deoplete-go settings
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#use_cache = 1
-let g:deoplete#sources#go#json_directory = '~/.nvim/cache/gocode'
+" let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+" let g:deoplete#sources#go#use_cache = 1
+" let g:deoplete#sources#go#json_directory = '~/.nvim/cache/gocode'
 
-" vim-go settings
-let g:go_fmt_command = "goimports"
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-au FileType go nmap <leader>t <Plug>(go-test)
+ let g:go_highlight_build_constraints = 1
+
+let g:go_auto_type_info = 1
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+" Configuration for vim-scala
+au BufRead,BufNewFile *.sbt set filetype=scala
+
+" ------------------------------ Coc settings ------------------------------ "
 "
-au FileType go nmap gd <Plug>(go-def-split)
-au FileType go nmap gv <Plug>(go-def-vertical)
-au FileType go nmap <F11> <Plug>(go-def-tab)
-" 
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 
-let g:go_fmt_command = "goimports"
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use K to show documentation in preview window
+nnoremap <silent> <F1> :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+
+" json comments for jsonc
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " ------------------------ Airline settings ------------------------ "
 " 
@@ -276,7 +314,7 @@ let python_highlight_all=1
 
 au FileType py,python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent fileformat=unix
 
-autocmd FileType ruby,html,css,yaml,yml setlocal expandtab shiftwidth=2 tabstop=2 fileformat=unix autoindent
+autocmd FileType ruby,html,css,yaml,yml,erb,json,ejson,yml.erb setlocal expandtab shiftwidth=2 tabstop=2 fileformat=unix autoindent
 
 "
 " ------------------------ CtrlP stuff ------------------------ "
@@ -284,10 +322,11 @@ autocmd FileType ruby,html,css,yaml,yml setlocal expandtab shiftwidth=2 tabstop=
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_switch_buffer = 't'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$\|vendor',
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
@@ -310,19 +349,6 @@ let g:gitgutter_sign_column_always = 1
 
 " set ruby to not do expensive syntax highlighting 
 let ruby_no_expensive=1
-
-" Set easytags to use project-dependent tags
-set tags=./.tags;,~/.vimtags
-
-"Set easytags to compile go-tags
-let g:easytags_languages = {
-    \   'language': {
-    \     'go': 'gotags',
-    \       'fileoutput_opt': '-f',
-    \       'stdout_opt': '-f-',
-    \       'recurse_flag': '-R'
-    \   }
-    \}
 
 " Use silver_searcher if it is installed 
 if executable('ag')
