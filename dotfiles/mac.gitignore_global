@@ -6,4 +6,5 @@ metastore_db/
 .DS_STORE
 *.log
 *.log.*
+no-commit/
 

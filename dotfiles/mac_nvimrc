@@ -164,7 +164,7 @@ if dein#load_state('/Users/michaelhighstead/.cache/dein')
 
   " Golang
   " call dein#add('zchee/deoplete-go', {'on_ft': 'go', 'build': 'make'})
-  " call dein#add('fatih/vim-go', {'on_ft': 'go'})
+  call dein#add('fatih/vim-go', {'on_ft': 'go'})
   " call dein#add('sebdah/vim-delve', {'on_ft': 'go'})
 
   " GUI
@@ -203,6 +203,8 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
  " cd ~/.vim/bundle
  " git clone git://github.com/altercation/vim-colors-solarized.git
  " mv vim-colors-solarized ~/.vim/bundle
+
+
 syntax enable
 set background=dark
 colorscheme Solarized
@@ -260,7 +262,8 @@ let g:deoplete#enable_at_startup = 1
 
 let g:go_auto_type_info = 1
 let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
+let g:go_info_mode='gocode'
+let g:go_fmt_command = "goimports"
 
 " Configuration for vim-scala
 au BufRead,BufNewFile *.sbt set filetype=scala
@@ -334,8 +337,8 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 if executable('ag')
-      let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  endif
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 
 " ------------------------ Html stuff ------------------------ "
 "
