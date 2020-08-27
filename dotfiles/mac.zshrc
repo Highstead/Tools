@@ -60,7 +60,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 export PYTHONPATH=/usr/local/bin/python
 
 export WORKON_HOME=~/.virtualenvs
-source $(brew --prefix)/bin/virtualenvwrapper.sh
+# source $(brew --prefix)/bin/virtualenvwrapper.sh
 
 # source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 
@@ -72,13 +72,16 @@ export GIT_EDITOR=$VISUAL
 export GOPATH=~/projects/goprojects
 export GOROOT=/Users/michaelhighstead/.dev/go/1.11
 export GOBIN=$GOPATH/bin
-
 export PATH=$PATH:$GOPATH/bin
+export GOPATH=~/projects/goprojects:$HOME
+
 export PATH=$PATH:~/bin
 # export PATH=$PATH:$SPARK_HOME/bin
 export PATH=$PATH:$GOROOT
 export PATH=$PATH:/Users/michaelhighstead/cql/dsc-cassandra-3.0.7/bin
 export PATH=$PATH:/Users/michaelhighstead/tools/maven/bin
+
+export CLASSPATH=$JAVA_HOME/jre/lib/*.jar:/Library/Java/Extensions
 
 gocd () { cd `go list -f '{{.Dir}}' $1` }
 
@@ -87,6 +90,7 @@ alias cqlsh="cqlsh --cqlversion 3.4.0"
 alias docker-clean='docker rm $(docker ps -a -q) && docker rmi $(docker images -q)'
 alias docker-stop='docker ps | grep "^[0-9a-f]" | cut -d " " -f1 | xargs docker stop'
 alias gb="git for-each-ref --sort=committerdate refs/heads/ --format='%(color: white)%(committerdate:short) %(color: blue)%(refname:short)'"
+alias gl='git log --date=short --pretty=format:'\''%Cgreen%h %Cblue%cd %Cred%an%Creset: %s'\'
 alias gg='go get -u $1 && go install $1'
 alias git-branch="git for-each-ref --sort=committerdate refs/heads/ --format='%(color: white)%(committerdate:short) %(color: blue)%(refname:short)'"
 alias ll='ls -alG'
@@ -97,14 +101,22 @@ alias vim='nvim'
 alias weather='curl http://wttr.in/ottawa'
 alias history='history -i'
 
-alias t2use1='kubectl --context=tier2'
-alias t2usc1='kubectl --context=tier2-central'
-alias t1use2='kubectl --context=tier1-us-east-2'
+alias t1can2='kubectl --context=tier1-na-ne1-2'
 alias t1usc2='kubectl --context=tier1-us-central-2'
-alias t1use6='kubectl --context=tier1-us-east1-6'
 alias t1usc6='kubectl --context=tier1-us-central1-6'
 alias t1use1='kubectl --context=tier1'
-alias t1can2='kubectl --context=tier1-na-ne1-2'
+alias t1use2='kubectl --context=tier1-us-east-2'
+alias t1use6='kubectl --context=tier1-us-east1-6'
+alias t2can1='kubectl --context=tier2-na-ne1-1'
+alias t2usc1='kubectl --context=tier2-central'
+alias t2use1='kubectl --context=tier2'
+alias t4usc1='kubectl --context=tier4'
+alias t4use1='kubectl --context=tier4-us-east1-2'
+
+alias t5use1='kubectl --context=tierstaging-us-east1-2'
+alias t5usc1='kubectl --context=tierstaging-us-central1-2'
+alias t5usc2='kubectl --context=tierstaging-us-central1-2'
+
 alias git-clean='git remote prune origin && git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
 alias nolint='rm -rf .git/hooks/pre-push.d'
@@ -144,3 +156,8 @@ export GO111MODULE=on
 export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/michaelhighstead/.kube/config:/Users/michaelhighstead/.kube/config.shopify.cloudplatform
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+alias cbd="cbt -project=shopify-canada -instance=reportify-na-ne-production"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+if [ -e /Users/michaelhighstead/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/michaelhighstead/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

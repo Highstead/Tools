@@ -7,4 +7,5 @@ metastore_db/
 *.log
 *.log.*
 no-commit/
-
+cover.out
+target/
