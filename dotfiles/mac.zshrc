@@ -6,7 +6,7 @@ LC_NUMERIC="en_US.UTF-8"
 LC_TIME="en_US.UTF-8"
 LC_ALL="en_US.UTF-8"
 
-export ZSH=/Users/michaelhighstead/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 DISABLE_AUTO_UPDATE="true"
@@ -70,7 +70,7 @@ export VISUAL=nvim
 export KUBE_EDITOR=$VISUAL
 export GIT_EDITOR=$VISUAL
 export GOPATH=~/projects/goprojects
-export GOROOT=/Users/michaelhighstead/.dev/go/1.11
+export GOROOT=$HOME/.dev/go/1.11
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
 export GOPATH=~/projects/goprojects:$HOME
@@ -78,8 +78,8 @@ export GOPATH=~/projects/goprojects:$HOME
 export PATH=$PATH:~/bin
 # export PATH=$PATH:$SPARK_HOME/bin
 export PATH=$PATH:$GOROOT
-export PATH=$PATH:/Users/michaelhighstead/cql/dsc-cassandra-3.0.7/bin
-export PATH=$PATH:/Users/michaelhighstead/tools/maven/bin
+export PATH=$PATH:$HOME/cql/dsc-cassandra-3.0.7/bin
+export PATH=$PATH:$HOME/tools/maven/bin
 
 export CLASSPATH=$JAVA_HOME/jre/lib/*.jar:/Library/Java/Extensions
 
@@ -153,11 +153,10 @@ killall gpg-agent
 export GO111MODULE=on
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
-export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/michaelhighstead/.kube/config:/Users/michaelhighstead/.kube/config.shopify.cloudplatform
+export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}$HOME/.kube/config:$HOME/.kube/config.shopify.cloudplatform
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 alias cbd="cbt -project=shopify-canada -instance=reportify-na-ne-production"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-if [ -e /Users/michaelhighstead/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/michaelhighstead/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
