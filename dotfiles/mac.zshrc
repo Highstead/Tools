@@ -7,7 +7,7 @@ LC_TIME="en_US.UTF-8"
 LC_ALL="en_US.UTF-8"
 
 export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 DISABLE_AUTO_UPDATE="true"
 DISABLE_AUTO_TITLE="true"
@@ -69,11 +69,15 @@ export VISUAL=nvim
 # export EDITOR=$VISUAL
 export KUBE_EDITOR=$VISUAL
 export GIT_EDITOR=$VISUAL
-export GOPATH=~/projects/goprojects
-export GOROOT=$HOME/.dev/go/1.11
-export GOBIN=$GOPATH/bin
+# export GOROOT=$HOME/.dev/go/1.15.3
+# export GOBIN=$GOPATH/bin
+# export GOROOT=/usr/local/opt/go/libexec
+# export GOPATH=~/
+
+export GOPATH=$HOME
+export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
-export GOPATH=~/projects/goprojects:$HOME
+export PATH=$PATH:$GOROOT/bin
 
 export PATH=$PATH:~/bin
 # export PATH=$PATH:$SPARK_HOME/bin
@@ -160,3 +164,4 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 alias cbd="cbt -project=shopify-canada -instance=reportify-na-ne-production"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+if [ -e /Users/highstead/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/highstead/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
