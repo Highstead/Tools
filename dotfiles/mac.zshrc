@@ -87,6 +87,9 @@ export PATH=$PATH:$HOME/tools/maven/bin
 
 export CLASSPATH=$JAVA_HOME/jre/lib/*.jar:/Library/Java/Extensions
 
+export DOTFILES=~/projects/Tools/dotfiles
+export GPG_TTY=$(tty)
+
 gocd () { cd `go list -f '{{.Dir}}' $1` }
 
 ### LS Colours
@@ -105,21 +108,8 @@ alias vim='nvim'
 alias weather='curl http://wttr.in/ottawa'
 alias history='history -i'
 
-alias t1can2='kubectl --context=tier1-na-ne1-2'
-alias t1usc2='kubectl --context=tier1-us-central-2'
-alias t1usc6='kubectl --context=tier1-us-central1-6'
-alias t1use1='kubectl --context=tier1'
-alias t1use2='kubectl --context=tier1-us-east-2'
-alias t1use6='kubectl --context=tier1-us-east1-6'
-alias t2can1='kubectl --context=tier2-na-ne1-1'
-alias t2usc1='kubectl --context=tier2-central'
-alias t2use1='kubectl --context=tier2'
-alias t4usc1='kubectl --context=tier4'
-alias t4use1='kubectl --context=tier4-us-east1-2'
-
-alias t5use1='kubectl --context=tierstaging-us-east1-2'
-alias t5usc1='kubectl --context=tierstaging-us-central1-2'
-alias t5usc2='kubectl --context=tierstaging-us-central1-2'
+# This has to happen because some BS node library called itself YARN which conflicts with the Hadoops yarn service
+alias yarn='/Users/highstead/.yarn/bin/yarn'
 
 alias git-clean='git remote prune origin && git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
@@ -155,6 +145,11 @@ _complete_ssh_hosts ()
 complete -F _complete_ssh_hosts ssh
 killall gpg-agent
 export GO111MODULE=on
+export GOPROXY=https://proxy.golang.org
+export GONOSUMDB="github.com/Shopify/*"
+export GOPRIVATE="github.com/Shopify/*"
+
+# export GOPROXY=https://goproxy.io - backup
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
 export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}$HOME/.kube/config:$HOME/.kube/config.shopify.cloudplatform
@@ -164,4 +159,12 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 alias cbd="cbt -project=shopify-canada -instance=reportify-na-ne-production"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
+endif
+set wildignore+=*\\vendor\\**
+
 if [ -e /Users/highstead/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/highstead/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+for file in /Users/highstead/src/github.com/Shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
+kubectl-short-aliases

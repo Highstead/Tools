@@ -24,15 +24,21 @@ go get golang.org/x/tools/cmd/goimports
 # TODO add compile and move goimports and gocode
 mkdir -p ~/.config/nvim/
 mv vim-colors-solarized/colors ~/.config/nvim/colors/
- " mv vim-colors-solarized ~/.vim/bundle
 
- ln -s ~/projects/Tools/dotfiles/mac.zshrc ~/.zshrc
+ln -s ~/projects/Tools/dotfiles/mac.zshrc ~/.zshrc
 ln -s ~/projects/Tools/dotfiles/mac_nvimrc ~/.config/nvim/init.vim
 ln -s projects/Tools/dotfiles/mac.gitignore_global ~/.gitignore
 
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > dein-installer.sh
 chmod 755 dein-installer.sh
-./dein-installer.sh $HOME/.nvim/repos/github.com/Shougo/dein.vim
+./dein-installer.sh $HOME/.cache/dein
 
 git config --global core.editor "nvim"
 git config --global core.excludesfile ~/.gitignore
+
+## Install crap for coc.nvim
+brew install node
+curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+
+### Neovim shit
+pip3 install neovim
