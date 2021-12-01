@@ -168,3 +168,9 @@ set wildignore+=*\\vendor\\**
 if [ -e /Users/highstead/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/highstead/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 for file in /Users/highstead/src/github.com/Shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
 kubectl-short-aliases
+
+[[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)
+
+# empty line
+
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }

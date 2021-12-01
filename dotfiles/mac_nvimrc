@@ -267,7 +267,7 @@ let g:python3_host_skip_check = 1
 " let g:go_auto_type_info = 1
 " let g:go_def_mode  ='gopls' "go get -u golang.org/x/tools/... to update
 " let g:go_info_mode ='gopls'
-" let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goimports"
 
 " Run gofmt on save
 " autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
@@ -340,17 +340,16 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_switch_buffer = 't'
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor     " MacOSX/Linux
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$\|vendor',
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
   \ }
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard | grep -v vendor/']
 
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" --ignore-dir vendor'
 endif
 
 " ------------------------ Html stuff ------------------------ "
