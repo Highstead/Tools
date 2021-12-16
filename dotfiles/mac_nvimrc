@@ -32,7 +32,12 @@ nnoremap <M-q> <C-w>l
 noremap <F7> <C-^>
 
 " set a map leader for more key combos
-let mapleader=","       " leader is comma
+noremap ' <NOP>
+noremap <space> <NOP>
+let mapleader="'"       " leader is apostrophe
+
+noremap , q
+noremap <space> @
 
 set number relativenumber
 
