@@ -6,62 +6,28 @@ LC_NUMERIC="en_US.UTF-8"
 LC_TIME="en_US.UTF-8"
 LC_ALL="en_US.UTF-8"
 
-export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="powerlevel10k/powerlevel10k"
+#powerlevel stuff
 
-DISABLE_AUTO_UPDATE="true"
-DISABLE_AUTO_TITLE="true"
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
 plugins=(git)
+
 source $ZSH/oh-my-zsh.sh
+source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
-setopt no_share_history
-
-# POWERLEVEL9k Settings
-POWERLEVEL9K_SHORTEN_STRATEGY=None
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-
-# Powerlevel Home Directory
-POWERLEVEL9K_DIR_HOME_BACKGROUND='black'
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='black'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='black'
-POWERLEVEL9K_DIR_HOME_FOREGROUND='249'
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='249'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='249'
-
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 
-# Configuracion POWERLVEL9K
-# POWERLEVEL9K_MODE='awesome-patched'
-
-# Powerlevel git
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='236'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='119'
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='236'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='214'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='236'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='196'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='236'
-
-# Powerlevel Ram
-POWERLEVEL9K_RAM_BACKGROUND="black"
-POWERLEVEL9K_RAM_FOREGROUND="249"
-POWERLEVEL9K_RAM_ELEMENTS=(ram_free)
-
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="\r\n"
-POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="%K{black}%F{white} %T %f%k%F{white}%f "
-# POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="%K{white}%F{black} %T %f%k%F{white}%f "
-
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status vcs virtualenv dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-
-# export SPARK_HOME=$HOME/tools/spark
+### End plvl10k
 export PYTHONPATH=/usr/local/bin/python
 
 export WORKON_HOME=~/.virtualenvs
-# source $(brew --prefix)/bin/virtualenvwrapper.sh
-
 # source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 
 GIT_PS1_SHOWDIRTYSTATE=true
@@ -174,3 +140,6 @@ kubectl-short-aliases
 # empty line
 
 [[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
+
+
+[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)

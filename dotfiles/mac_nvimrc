@@ -1,16 +1,10 @@
-if has('nvim')
-    let s:editor_root=expand("~/.config/nvim")
-
-    tnoremap <Esc> <C-\><C-n>
-else
-    let s:editor_root=expand("~/.vim")
-endif
 set autoread " Reloads when buffer is stale
 noremap ; h
 noremap q l
 
 " Nvim navigation between windows, exiting terminal
 " ;qjk -> …œ∆˚
+" map meta to right option: preferences -> Profiles, Keys and choose Left option Key acts as: +Esc.
 tnoremap <M-;> <C-\><C-n><C-w>h
 tnoremap <M-j> <C-\><C-n><C-w>j
 tnoremap <M-k> <C-\><C-n><C-w>k
@@ -19,14 +13,6 @@ nnoremap <M-;> <C-w>h
 nnoremap <M-j> <C-w>j
 nnoremap <M-k> <C-w>k
 nnoremap <M-q> <C-w>l
-" tnoremap … <C-\><C-n><C-w>h
-" tnoremap ∆ <C-\><C-n><C-w>j
-" tnoremap ˚ <C-\><C-n><C-w>k
-" tnoremap œ <C-\><C-n><C-w>l
-" nnoremap … <C-w>h
-" nnoremap ∆ <C-w>j
-" nnoremap ˚ <C-w>k
-" nnoremap œ <C-w>l
 
 " Previous Buffer
 noremap <F7> <C-^>
@@ -160,7 +146,7 @@ if dein#load_state('$HOME/.cache/dein')
   " call dein#add('derekwyatt/vim-scala')
 
   " Conquer of completion
-  call dein#add('neoclide/coc.nvim', { 'merged': 0 })
+  call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 
 
   " You can specify revision/branch/tag.
@@ -269,9 +255,20 @@ let g:python3_host_skip_check = 1
 
  let g:go_highlight_build_constraints = 1
 
-" let g:go_auto_type_info = 1
-" let g:go_def_mode  ='gopls' "go get -u golang.org/x/tools/... to update
-" let g:go_info_mode ='gopls'
+" to setup coc :CocConfig
+" {
+"   "languageserver": {
+"     "go": {
+"       "command": "gopls",
+"       "rootPatterns": ["go.mod"],
+"       "trace.server": "verbose",
+"       "filetypes": ["go"]
+"     }
+"   }
+" }
+
+ "
+ "
 let g:go_fmt_command = "goimports"
 
 " Run gofmt on save
