@@ -88,11 +88,7 @@ nmap U :redo<cr>
 " Set colours
 syntax on                   " switch syntax highlighting on
 
-set t_Co=256                " Explicitly tell vim that the terminal supports 256 colors"
-set background=dark
-
-" set line the cursor is on to be highlighted
-set cursorline
+" set t_Co=256                " Explicitly tell vim that the terminal supports 256 colors"
 
 " make comments and HTML attributes italic
 highlight htmlArg cterm=italic
@@ -144,6 +140,9 @@ if dein#load_state('$HOME/.cache/dein')
 
   " Scala
   " call dein#add('derekwyatt/vim-scala')
+
+  " colours
+  call dein#add('altercation/vim-colors-solarized')
 
   " Conquer of completion
   call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
@@ -204,6 +203,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 syntax enable
 set background=dark
 colorscheme Solarized
+highlight Normal ctermbg=none
 
 set backspace=indent,eol,start
 set number              " show line numbers
@@ -225,6 +225,8 @@ filetype plugin indent on    " required
 let g:NERDTreeWinSize=35
 let g:NERDTreeWinPos = "left"
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+" -----
 
 " 'Hide nerdtree if not dir
 " autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif

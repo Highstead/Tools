@@ -29,9 +29,9 @@ mkdir -p ~/.config/nvim/
 mv vim-colors-solarized/colors ~/.config/nvim/colors/
 
 rm ~/.zshrc
-ln -s ~/projects/Tools/dotfiles/mac.zshrc ~/.zshrc
-ln -s ~/projects/Tools/dotfiles/mac_nvimrc ~/.config/nvim/init.vim
-ln -s projects/Tools/dotfiles/mac.gitignore_global ~/.gitignore
+ln -s ~/tools/dotfiles/mac.zshrc ~/.zshrc
+ln -s ~/tools/dotfiles/mac_nvimrc ~/.config/nvim/init.vim
+ln -s ~/tools/dotfiles/mac.gitignore_global ~/.gitignore
 
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > dein-installer.sh
 chmod 755 dein-installer.sh
