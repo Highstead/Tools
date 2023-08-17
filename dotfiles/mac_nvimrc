@@ -162,6 +162,13 @@ if dein#load_state('$HOME/.cache/dein')
   " Golang
   call dein#add('fatih/vim-go', {'on_ft': 'go'})		" go get -u golang.org/x/tools/...
 
+  " Rust
+  call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh' })
+  call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
+
+  call dein#add('tree-sitter/tree-sitter', {'on_ft': 'rust'})
+  call dein#add('tree-sitter/tree-sitter-rust', {'on_ft': 'rust'})
+
   " Assorted highlighting of languas
   call dein#add('sheerun/vim-polyglot')
 
@@ -282,6 +289,9 @@ let g:go_def_mapping_enabled = 0
 nmap <silent> <Leader>r <Plug>(coc-references)
 nmap <silent> <Leader>f <Plug>(coc-fix-current)
 
+" ------------------------------ Rust Settings ----------------------------- "
+let g:rustfmt_autosave = 1
+
 " ------------------------------ Coc settings ------------------------------ "
 "
 
@@ -337,7 +347,7 @@ au FileType py,python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab au
 
 autocmd FileType ruby,html,css,yaml,yml,erb,json,ejson,yml.erb setlocal expandtab shiftwidth=2 tabstop=2 fileformat=unix autoindent
 
-"
+
 " ------------------------ CtrlP stuff ------------------------ "
 " :help ctrlp.txt
 let g:ctrlp_map = '<c-p>'
@@ -351,6 +361,12 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll)$',
   \ }
 " let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard | grep -v vendor/']
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+    \ }
 
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 if executable('ag')

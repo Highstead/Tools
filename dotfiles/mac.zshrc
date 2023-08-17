@@ -35,10 +35,6 @@ export VISUAL=nvim
 # export EDITOR=$VISUAL
 export KUBE_EDITOR=$VISUAL
 export GIT_EDITOR=$VISUAL
-# export GOROOT=$HOME/.dev/go/1.15.3
-# export GOBIN=$GOPATH/bin
-# export GOROOT=/usr/local/opt/go/libexec
-# export GOPATH=~/
 
 export GOPATH=$HOME
 export GOROOT=/usr/local/opt/go/libexec
@@ -48,7 +44,7 @@ export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:~/bin
 # export PATH=$PATH:$SPARK_HOME/bin
 export PATH=$PATH:$GOROOT
-export PATH=$PATH:$HOME/cql/dsc-cassandra-3.0.7/bin
+export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/tools/maven/bin
 
 export CLASSPATH=$JAVA_HOME/jre/lib/*.jar:/Library/Java/Extensions
@@ -112,8 +108,8 @@ complete -F _complete_ssh_hosts ssh
 killall gpg-agent
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org
-export GONOSUMDB="github.com/Shopify/*"
-export GOPRIVATE="github.com/Shopify/*"
+# export GONOSUMDB="github.com/highstead/*"
+# export GOPRIVATE="github.com/highstead/*"
 
 # export GOPROXY=https://goproxy.io - backup
 
@@ -126,11 +122,14 @@ alias cbd="cbt -project=shopify-canada -instance=reportify-na-ne-production"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 if exists("g:ctrlp_user_command")
   unlet g:ctrlp_user_command
 endif
 set wildignore+=*\\vendor\\**
-
 
