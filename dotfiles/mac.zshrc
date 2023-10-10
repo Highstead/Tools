@@ -18,6 +18,10 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
+
+unsetopt inc_append_history
+unsetopt share_history
+
 source $ZSH_CUSTOM/themes/powerlevel10k/powerlevel10k.zsh-theme
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -37,9 +41,10 @@ export KUBE_EDITOR=$VISUAL
 export GIT_EDITOR=$VISUAL
 
 export GOPATH=$HOME
-export GOROOT=/usr/local/opt/go/libexec
+export GOROOT=/opt/homebrew/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+export GOSUMDB="sum.golang.org"
 
 export PATH=$PATH:~/bin
 # export PATH=$PATH:$SPARK_HOME/bin
@@ -83,6 +88,8 @@ if [[ -f /opt/dev/dev.sh ]] && [[ $- == *i* ]]; then
   source /opt/dev/dev.sh
 fi
 
+### to add a new cluster to autocomplete type
+# gcloud container clusters get-credentials $CLUSTER_NAME --region=$REGION
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
@@ -114,22 +121,14 @@ export GOPROXY=https://proxy.golang.org
 # export GOPROXY=https://goproxy.io - backup
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
-export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}$HOME/.kube/config:$HOME/.kube/config.shopify.cloudplatform
-
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 alias cbd="cbt -project=shopify-canada -instance=reportify-na-ne-production"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(direnv hook zsh)"
+
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
-
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-if exists("g:ctrlp_user_command")
-  unlet g:ctrlp_user_command
-endif
-set wildignore+=*\\vendor\\**
-

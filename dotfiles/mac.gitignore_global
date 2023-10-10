@@ -1,4 +1,4 @@
-.vscode/ 
+.vscode/
 metastore_db/
 .bloop
 .metals
@@ -6,6 +6,7 @@ metastore_db/
 .DS_STORE
 *.log
 *.log.*
+.envrc
 no-commit/
 cover.out
 target/

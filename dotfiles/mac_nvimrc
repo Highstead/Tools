@@ -115,6 +115,9 @@ if dein#load_state('$HOME/.cache/dein')
   " Required:
   call dein#add('$HOME/.cache/dein/repos/github.com/Shougo/dein.vim')
 
+  call dein#add('neovim/nvim-lspconfig')
+  call dein#add('octarect/nvim-lspservers')
+
   " Add or remove your plugins here:
   " call dein#add('Shougo/neosnippet.vim')
   " call dein#add('Shougo/neosnippet-snippets')
@@ -163,7 +166,6 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('fatih/vim-go', {'on_ft': 'go'})		" go get -u golang.org/x/tools/...
 
   " Rust
-  call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh' })
   call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
 
   call dein#add('tree-sitter/tree-sitter', {'on_ft': 'rust'})
@@ -364,6 +366,7 @@ let g:ctrlp_custom_ignore = {
 
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'python': ['/usr/local/bin/pyls'],
     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
     \ }
@@ -390,7 +393,6 @@ let ruby_no_expensive=1
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
-
 
 " Mouse stuff
 set mouse=a
