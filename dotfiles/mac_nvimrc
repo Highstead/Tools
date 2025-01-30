@@ -83,7 +83,6 @@ endif
 
 autocmd BufWritePost *.cpp :TlistUpdate
 
-" shortcut to save
 nmap U :redo<cr>
 " Set colours
 syntax on                   " switch syntax highlighting on

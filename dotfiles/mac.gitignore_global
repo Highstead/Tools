@@ -10,3 +10,6 @@ metastore_db/
 no-commit/
 cover.out
 target/
+.project
+.classpath
+.settings/
