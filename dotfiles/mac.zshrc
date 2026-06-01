@@ -41,7 +41,7 @@ export KUBE_EDITOR=$VISUAL
 export GIT_EDITOR=$VISUAL
 
 export GOPATH=$HOME
-export GOROOT=/opt/homebrew/opt/go/libexec
+# export GOROOT=/opt/homebrew/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export GOSUMDB="sum.golang.org"
@@ -62,6 +62,7 @@ gocd () { cd `go list -f '{{.Dir}}' $1` }
 ### LS Colours
 alias cqlsh="cqlsh --cqlversion 3.4.0"
 alias docker-clean='docker rm $(docker ps -a -q) && docker rmi $(docker images -q)'
+alias lsp-clean='rm /Users/highstead/.local/state/nvim/lsp.log'
 alias docker-stop='docker ps | grep "^[0-9a-f]" | cut -d " " -f1 | xargs docker stop'
 alias gb="git for-each-ref --sort=committerdate refs/heads/ --format='%(color: white)%(committerdate:short) %(color: blue)%(refname:short)'"
 alias gl='git log --date=short --pretty=format:'\''%Cgreen%h %Cblue%cd %Cred%an%Creset: %s'\'
@@ -74,6 +75,7 @@ alias mysql='mysql --protocol=tcp'
 alias vim='nvim'
 alias weather='curl http://wttr.in/ottawa'
 alias history='history -i'
+alias k='kubectl'
 
 # This has to happen because some BS node library called itself YARN which conflicts with the Hadoops yarn service
 alias yarn='/Users/highstead/.yarn/bin/yarn'
@@ -132,3 +134,27 @@ eval "$(direnv hook zsh)"
 
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
+
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(direnv hook zsh)"
+
+alias date="date && TZ='UTC' date"
+
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+source /opt/homebrew/Caskroom/google-cloud-sdk/442.0.0/google-cloud-sdk/completion.zsh.inc
+source /opt/homebrew/Caskroom/google-cloud-sdk/442.0.0/google-cloud-sdk/path.zsh.inc
+
+alias kdecode="k --context devops -n $1 get secret $2 -o json | jq -r '.data | to_entries[] | .key + ": " + (.value | @base64d)'"
+
+for file in /Users/highstead/.sourced/*; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+done
+
+source ~/.env
+# source "${HOME}/.gvm/scripts/gvm"
+source /Users/highstead/.config/dev/devrc
+export PATH="$HOME/.local/bin:$PATH"
